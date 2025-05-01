@@ -1,7 +1,7 @@
-# PURi
+# PURIPURI
 
 <p align="center">
-  <img src="https://path-to-your-logo/puri-logo.png" alt="PURi Logo" width="400"/>
+  <img src="https://path-to-your-logo/puripuri-logo.png" alt="PURIPURI Logo" width="400"/>
 </p>
 
 <p align="center">
@@ -21,9 +21,9 @@
 
 ## Overview
 
-PURi is an AI-powered adaptive math learning platform that revolutionizes how students learn mathematics through personalized, interactive, and effective learning experiences. By combining AI technology with effective pedagogical approaches, PURi bridges the gap between passive and active learning methodologies to create a comprehensive learning solution.
+PURIPURI is an AI-powered adaptive math learning platform that revolutionizes how students learn mathematics through personalized, interactive, and effective learning experiences. By combining AI technology with effective pedagogical approaches, PURi bridges the gap between passive and active learning methodologies to create a comprehensive learning solution.
 
-> "The essence of mathematics is not to make simple things complicated, but to make complicated things simple." - PURi's approach to math education
+> "The essence of mathematics is not to make simple things complicated, but to make complicated things simple." - PURIPURI's approach to math education
 
 ## Features
 
@@ -61,7 +61,7 @@ PURi implements a three-tier architecture consisting of:
 3. **Data Layer**: Secure storage of learning data, user information, and content
 
 <p align="center">
-  <img src="https://path-to-your-diagram/architecture-diagram.png" alt="PURi Architecture" width="700"/>
+  <img src="https://path-to-your-diagram/architecture-diagram.png" alt="PURIPURI Architecture" width="700"/>
 </p>
 
 ### AI Architecture
@@ -136,12 +136,12 @@ The AI engine consists of three primary components:
 
 - **85.7%** of students reported significant performance improvement
 - **75%** of users indicated intention to continue using the platform
-- **94.4%** of students felt more confident about their mathematical abilities after using PURi
+- **94.4%** of students felt more confident about their mathematical abilities after using PURIPURI
 
 ### Comparative Analysis
 
-| Metric | PURi | Traditional Tutoring | Digital Competitors |
-|--------|------|----------------------|---------------------|
+| Metric | PURIPURI | Traditional Tutoring | Digital Competitors |
+|--------|----------|----------------------|---------------------|
 | Learning Efficiency | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
 | Cost Effectiveness | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
 | Personalization | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
@@ -156,7 +156,7 @@ The AI engine consists of three primary components:
 - PURi account (free tier available)
 
 ### Installation
-1. Download the PURi app from the App Store or Google Play
+1. Download the PURIPURI app from the App Store or Google Play
 2. Create an account or log in
 3. Select your grade level and preferred math topics
 4. Complete the initial assessment to personalize your experience
@@ -181,11 +181,11 @@ The AI engine consists of three primary components:
 
 ## Contact
 
-- **Website**: [www.puri-learning.com](https://www.puri-learning.com)
-- **Email**: contact@puri-learning.com
-- **Twitter**: [@PURiLearning](https://twitter.com/PURiLearning)
-- **Instagram**: [@PURi_Math](https://instagram.com/PURi_Math)
+- **Website**: [www.puripuri-learning.com](https://www.puripuri-learning.com)
+- **Email**: contact@puripuri-learning.com
+- **Twitter**: [@PURIPURILearning](https://twitter.com/PURIPURILearning)
+- **Instagram**: [@PURIPURI_Math](https://instagram.com/PURIPURI_Math)
 
 ## License
 
-PURi is proprietary software. © 2025 PURi Learning Inc. All rights reserved.
+PURIPURI is proprietary software. © 2025 PURIPURI Learning Inc. All rights reserved.
