@@ -1,7 +1,7 @@
 # PURIPURI
 
 <p align="center">
-  <img src="https://path-to-your-logo/puripuri-logo.png" alt="PURIPURI Logo" width="400"/>
+  <img src="images/puripuri_icon.png" alt="PURIPURI Logo" width="600"/>
 </p>
 
 <p align="center">
@@ -61,7 +61,7 @@ PURi implements a three-tier architecture consisting of:
 3. **Data Layer**: Secure storage of learning data, user information, and content
 
 <p align="center">
-  <img src="https://path-to-your-diagram/architecture-diagram.png" alt="PURIPURI Architecture" width="700"/>
+  <img src="images/architecture-diagram.jpg" alt="PURIPURI Architecture" width="700"/>
 </p>
 
 ### AI Architecture
@@ -101,7 +101,7 @@ The AI engine consists of three primary components:
 5. **Track Progress**: Monitor improvement through comprehensive analytics
 
 <p align="center">
-  <img src="https://path-to-your-image/learning-flow.png" alt="Learning Flow" width="700"/>
+  <img src="images/learning-flow.jpg" alt="Learning Flow" width="700"/>
 </p>
 
 ### Three Learning Modes
@@ -121,13 +121,8 @@ The AI engine consists of three primary components:
 ## Demo Screenshots
 
 <p align="center">
-  <img src="https://path-to-your-screenshot/concept-learning.png" alt="Concept Learning" width="300"/>
-  <img src="https://path-to-your-screenshot/problem-solving.png" alt="Problem Solving" width="300"/>
-</p>
-
-<p align="center">
-  <img src="https://path-to-your-screenshot/hints-system.png" alt="Hints System" width="300"/>
-  <img src="https://path-to-your-screenshot/progress-tracking.png" alt="Progress Tracking" width="300"/>
+  <img src="images/Tablet_Learning_Page.png" alt="Learning Page" width="400"/>
+  <img src="images/Tablet_Test_Page.png" alt="Test Page" width="400"/>
 </p>
 
 ## Performance
@@ -178,3 +173,14 @@ The AI engine consists of three primary components:
 - **Parent/teacher portal**: Enhanced oversight and custom assignment capabilities
 - **Collaborative learning**: Peer-to-peer problem solving and group challenges
 - **AR/VR integration**: Immersive mathematical concept visualization
+
+## Contact
+
+- **Website**: [www.puripuri-learning.com](https://www.puripuri-learning.com)
+- **Email**: contact@puripuri-learning.com
+- **Twitter**: [@PURIPURILearning](https://twitter.com/PURIPURILearning)
+- **Instagram**: [@PURIPURI_Math](https://instagram.com/PURIPURI_Math)
+
+## License
+
+PURIPURI is proprietary software. © 2025 PURIPURI Learning Inc. All rights reserved.
