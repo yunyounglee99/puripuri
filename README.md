@@ -179,15 +179,4 @@ Our platform's intuitive interface is designed to maximize learning effectivenes
 - **AI tutor interaction**: Natural language conversation with AI tutors
 - **Parent/teacher portal**: Enhanced oversight and custom assignment capabilities
 - **Collaborative learning**: Peer-to-peer problem solving and group challenges
-- **AR/VR integration**: Immersive mathematical concept visualization
-
-## Contact
-
-- **Website**: [www.puripuri-learning.com](https://www.puripuri-learning.com)
-- **Email**: contact@puripuri-learning.com
-- **Twitter**: [@PURIPURILearning](https://twitter.com/PURIPURILearning)
-- **Instagram**: [@PURIPURI_Math](https://instagram.com/PURIPURI_Math)
-
-## License
-
-PURIPURI is proprietary software. © 2025 PURIPURI Learning Inc. All rights reserved.
+- **AR integration**: Immersive mathematical concept visualization
