@@ -118,11 +118,18 @@ The AI engine consists of three primary components:
 - Advanced challenges for deeper mathematical thinking
 - AI analyzes solution approaches and provides targeted feedback
 
-## Demo Screenshots
+## Design Mockups
+
+Our platform's intuitive interface is designed to maximize learning effectiveness while maintaining simplicity and engagement. Below are design mockups created in Figma, showcasing the expected user experience:
 
 <p align="center">
-  <img src="images/Tablet_Learning_Page.png" alt="Learning Page" width="400"/>
-  <img src="images/Tablet_Test_Page.png" alt="Test Page" width="400"/>
+  <img src="images/Tablet_Learning_Page.png" alt="Tablet Learning Page - Figma Mockup" width="700"/>
+  <br><em>Learning Page: Interactive video-based lessons with concept explanations</em>
+</p>
+
+<p align="center">
+  <img src="images/Tablet_Test_Page.png" alt="Tablet Test Page - Figma Mockup" width="700"/>
+  <br><em>Test Page: AI-assisted problem solving with personalized hints and feedback</em>
 </p>
 
 ## Performance
