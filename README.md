@@ -164,7 +164,7 @@ Our platform's intuitive interface is designed to maximize learning effectivenes
 4. Complete the initial assessment to personalize your experience
 5. Begin your personalized math learning journey!
 
-## Pricing
+## Pricing/BM
 
 | Plan | Features | Monthly Price |
 |------|----------|---------------|
