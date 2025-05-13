@@ -19,6 +19,10 @@
   <a href="#contact">Contact</a>
 </p>
 
+#### MVP demo Video (Click the image)
+[![puripuri 샘플 데모](https://img.youtube.com/vi/PtFMO7HUpOM/0.jpg)](https://youtu.be/PtFMO7HUpOM?si=3OCWcjJ5sbbOYe7p)
+
+
 ## Overview
 
 PURIPURI is an AI-powered adaptive math learning platform that revolutionizes how students learn mathematics through personalized, interactive, and effective learning experiences. By combining AI technology with effective pedagogical approaches, PURi bridges the gap between passive and active learning methodologies to create a comprehensive learning solution.
