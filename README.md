@@ -20,7 +20,7 @@
 </p>
 
 #### MVP demo Video (Click the image)
-[![puripuri 샘플 데모](https://img.youtube.com/vi/PtFMO7HUpOM/0.jpg)](https://youtu.be/PtFMO7HUpOM?si=3OCWcjJ5sbbOYe7p)
+[![puripuri 샘플 데모](https://img.youtube.com/vi/FDfZSwzujlo/0.jpg)](https://youtu.be/FDfZSwzujlo?si=W2gWaRdDxXzM12DB)
 
 
 ## Overview
