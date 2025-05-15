@@ -1,19 +1,42 @@
-import React, { useState, useRef } from "react";
-import axios from "axios";
-import katex from "katex";
-import "katex/dist/katex.min.css";
+import React, { useState, useRef } from 'react';
+import axios from 'axios';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 
 // 라텍스 포함 텍스트를 KaTeX HTML로 변환하는 헬퍼 함수
 function renderMathText(text) {
   if (!text) return '';
   // 블록 수식: $$ ... $$
   let html = text.replace(/\${2}([^$]+)\${2}/g, (_, expr) =>
-    katex.renderToString(expr.trim(), { displayMode: true, throwOnError: false })
+    katex.renderToString(expr.trim(), {
+      displayMode: true,
+      throwOnError: false,
+    })
   );
   // 인라인 수식: \( ... \)
-  html = html.replace(/\\\(([^)]+)\\\)/g, (_, expr) =>
-    katex.renderToString(expr.trim(), { displayMode: false, throwOnError: false })
+  html = html.replace(/\\(([^)]+)\\)/g, (_, expr) =>
+    katex.renderToString(expr.trim(), {
+      displayMode: false,
+      throwOnError: false,
+    })
   );
+  // 단일 달러 인라인 수식: $ ... $
+  html = html.replace(/\$([^$]+)\$/g, (_, expr) =>
+    katex.renderToString(expr.trim(), {
+      displayMode: false,
+      throwOnError: false,
+    })
+  );
+  // 프롬프트 오류 수정: $[...]$
+  html = html.replace(/\$\[([^\]]+)\]\$/g, (_, expr) =>
+    katex.renderToString(expr.trim(), {
+      displayMode: false,
+      throwOnError: false,
+    })
+  );
+  // KaTeX 오류 출력 스팬 제거
+  html = html.replace(/<span class="katex-error"[\s\S]*?<\/span>/g, '');
+
   return html;
 }
 
@@ -21,9 +44,26 @@ function renderMathText(text) {
 const QUESTION_BANK = [
   {
     id: 1,
-    question: "\\lim_{x \\to \\infty} (3x+1)f(x) = 6, \\quad \\lim_{x \\to \\infty} (x-4)g(x)=2, \\quad \\lim_{x \\to \\infty} \\dfrac{(x+1)g(x)}{(2x+3)f(x)} = ?",
-    answer: "1/3",
-    solution: "(x+1)g(x) \\approx \\frac{2}{x-4}(x+1) \\text{… 예시 해설 내용}"
+    question:
+      '\\lim_{x \\to \\infty} (3x+1)f(x) = 6, \\quad \\lim_{x \\to \\infty} (x-4)g(x)=2, \\quad \\lim_{x \\to \\infty} \\dfrac{(x+1)g(x)}{(2x+3)f(x)} = ?',
+    answer: '1/2',
+    solution:
+      '1. 주어진 극한 정리\
+    주어진 식은 $lim_{x\toinfty}(3x+1)f(x)=6$ 와 $lim_{x\toinfty}(x-4)g(x)=2$ 입니다.\
+    2. 함수의 근사 표현\
+    $f(x)simdfrac{6}{3x+1}approxdfrac{2}{x}$\
+    $g(x)simdfrac{2}{x-4}approxdfrac{2}{x}$\
+    3. 목표 극한 분해\
+    $L = lim_{x\toinfty}dfrac{(x+1)g(x)}{(2x+3)f(x)}$\
+    이를 다음 두 부분으로 나눕니다:\
+    $A(x)=dfrac{x+1}{2x+3},quad B(x)=dfrac{g(x)}{f(x)}$\
+    4. 첫 번째 부분 $A(x)$\
+    $A(x)=dfrac{x+1}{2x+3}\todfrac12$  ($x\toinfty$)\
+    5. 두 번째 부분 $B(x)$\
+    $B(x)=dfrac{g(x)}{f(x)}=dfrac{\frac{2}{x-4}}{\frac{6}{3x+1}}\
+    =dfrac{3x+1}{3(x-4)}\to1$\
+    6. 최종 결합\
+    $L=dfrac12\times1=\boxed{dfrac12}$',
   },
 ];
 
@@ -35,7 +75,7 @@ export default function MathPracticeApp() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [hint, setHint] = useState(null);
   const [hintLoading, setHintLoading] = useState(false);
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState('');
   const [answerState, setAnswerState] = useState(null);
 
   const initCanvas = (ctx) => {
@@ -71,22 +111,27 @@ export default function MathPracticeApp() {
     setHint(null);
     try {
       const dataUrl = canvasRef.current.toDataURL('image/png');
-      const mp = await axios.post('http://localhost:4000/api/ocr', { src: dataUrl });
+      const mp = await axios.post('http://localhost:4000/api/ocr', {
+        src: dataUrl,
+      });
       const studentLatex = mp.data.latex;
-      const prompt = `당신은 학생들에게 수학을 가르쳐주는 창의적이고 열정적이며 친절한 수학 선생님입니다.
-학생이 풀고있는 문제는 ${question.question} 입니다.
-다음은 해당 문제 해설입니다:
-${question.solution}
-
-아래 수식은 학생이 해당 문제를 풀다가 막힌 풀이입니다
-${studentLatex}
-
-학생의 풀이와 문제 해설을 참고하여 학생이 작성한 풀이 직후에 시도해보면 좋은 문제풀이에 대한 힌트를 딱 한가지를 구체적으로 알려주세요.
-힌트는 필요하면 계산식은 알려주되 계산 결과값에 대한 언급은 없어야합니다.
-학생이 이미 풀이에서 시도한 내용은 무조건 힌트로 언급하지 말아주세요.
-모든 수식은 \(...\) 또는 $$...$$ 형태로 감싸서 출력해 주세요.
-`;
-      const gpt = await axios.post('http://localhost:4000/api/generate-hint', { prompt });
+      const prompt = `당신은 학생들에게 수학을 가르쳐주는 창의적이고 열정적이며 친절한 수학 선생님입니다.\
+      학생이 풀고있는 문제는 ${question.question} 입니다.\
+      다음은 해당 문제 해설입니다:\
+      ${question.solution}\
+      다음 수식은 학생이 해당 문제를 풀다가 막힌 풀이입니다\
+      ${studentLatex}\
+      다음 조건을 무조건 지키며 힌트를 알려주세요.\
+      <조건>\
+      학생의 풀이와 문제 해설을 참고하여 학생이 작성한 풀이 직후에 시도해보면 좋은 문제풀이에 대한 힌트를 딱 한가지를 구체적으로 알려주세요.\
+      힌트는 필요하면 계산식은 알려주되 계산 결과값에 대한 언급은 없어야합니다.\
+      학생이 이미 풀이에서 시도한 내용은 무조건 힌트로 언급하지 말아주세요.\
+      학생의 풀이가 해설의 과정과 다르면 학생의 풀이를 우선적으로 생각하여 학생 풀이 다음으로 시도할 수 있는 힌트를 제시해주세요.\
+      모든 수식은 '$...$' 형태로만 감싸서 출력해 주세요. 즉, 처음과 끝이 $로 시작되고 $로 끝낼 수 있도록 지켜주세요. 대괄호, 중괄호, 소괄호로 감싸기 등의 다른 형태는 일절 허용하지 않습니다.\
+      `;
+      const gpt = await axios.post('http://localhost:4000/api/generate-hint', {
+        prompt,
+      });
       setHint(gpt.data.hint);
     } catch (e) {
       console.error(e);
@@ -104,7 +149,14 @@ ${studentLatex}
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       {/* 사이드바 */}
-      <div style={{ width: 256, backgroundColor: '#000', color: '#fff', padding: 24 }}>
+      <div
+        style={{
+          width: 256,
+          backgroundColor: '#000',
+          color: '#fff',
+          padding: 24,
+        }}
+      >
         <h2 style={{ marginBottom: 16 }}>수학 2</h2>
         <ul style={{ listStyle: 'none', paddingLeft: 0, fontSize: 14 }}>
           <li>1. 함수의 극한과 연속</li>
@@ -118,13 +170,30 @@ ${studentLatex}
           <li style={{ marginTop: 8 }}>3. 적분</li>
         </ul>
         <div style={{ marginTop: 24, textAlign: 'center' }}>48%</div>
-        <div style={{ height: 8, backgroundColor: '#4B5563', borderRadius: 4, overflow: 'hidden', marginTop: 4 }}>
-          <div style={{ width: '48%', height: '100%', backgroundColor: '#10B981' }}></div>
+        <div
+          style={{
+            height: 8,
+            backgroundColor: '#4B5563',
+            borderRadius: 4,
+            overflow: 'hidden',
+            marginTop: 4,
+          }}
+        >
+          <div
+            style={{ width: '48%', height: '100%', backgroundColor: '#10B981' }}
+          ></div>
         </div>
         <button
           onClick={generateHint}
           disabled={hintLoading}
-          style={{ marginTop: 16, width: '100%', padding: '8px', backgroundColor: '#10B981', color: '#fff', border: 'none' }}
+          style={{
+            marginTop: 16,
+            width: '100%',
+            padding: '8px',
+            backgroundColor: '#10B981',
+            color: '#fff',
+            border: 'none',
+          }}
         >
           {hintLoading ? '힌트 생성 중...' : '힌트보기'}
         </button>
@@ -132,20 +201,52 @@ ${studentLatex}
 
       {/* 메인 */}
       <div style={{ flex: 1, backgroundColor: '#F3F4F6', padding: 40 }}>
-        <div style={{ maxWidth: 768, margin: '0 auto', backgroundColor: '#fff', borderRadius: 8, padding: 24 }}>
+        <div
+          style={{
+            maxWidth: 768,
+            margin: '0 auto',
+            backgroundColor: '#fff',
+            borderRadius: 8,
+            padding: 24,
+          }}
+        >
           <h1 style={{ marginBottom: 8 }}>문제학습</h1>
           <h2 style={{ marginBottom: 16 }}>문제 {question.id}.</h2>
           <div
-            dangerouslySetInnerHTML={{ __html: katex.renderToString(question.question, { displayMode: true, throwOnError: false }) }}
-            style={{ padding: 16, borderLeft: '4px solid #2563EB', marginBottom: 16 }}
+            dangerouslySetInnerHTML={{
+              __html: katex.renderToString(question.question, {
+                displayMode: true,
+                throwOnError: false,
+              }),
+            }}
+            style={{
+              padding: 16,
+              borderLeft: '4px solid #2563EB',
+              marginBottom: 16,
+            }}
           />
-          <p style={{ marginBottom: 16, fontSize: 14 }}>풀이 작성 팁: 대충 쓴 글씨가 오답을 만든다!</p>
-          <div style={{ backgroundColor: '#E5E7EB', borderRadius: 8, padding: 16, marginBottom: 24, height: 220 }}>            
+          <p style={{ marginBottom: 16, fontSize: 14 }}>
+            풀이 작성 팁: 대충 쓴 글씨가 오답을 만든다!
+          </p>
+          <div
+            style={{
+              backgroundColor: '#E5E7EB',
+              borderRadius: 8,
+              padding: 16,
+              marginBottom: 24,
+              height: 220,
+            }}
+          >
             <canvas
               ref={canvasRef}
               width={600}
               height={200}
-              style={{ backgroundColor: '#D1D5DB', cursor: 'crosshair', display: 'block', margin: '0 auto' }}
+              style={{
+                backgroundColor: '#D1D5DB',
+                cursor: 'crosshair',
+                display: 'block',
+                margin: '0 auto',
+              }}
               onMouseDown={startDrawing}
               onMouseMove={draw}
               onMouseUp={stopDrawing}
@@ -155,22 +256,54 @@ ${studentLatex}
           {hint && (
             <div
               dangerouslySetInnerHTML={{ __html: renderMathText(hint) }}
-              style={{ backgroundColor: '#ECFDF5', border: '1px solid #34D399', borderRadius: 4, padding: 16, marginBottom: 24, fontSize: 14 }}
+              style={{
+                backgroundColor: '#ECFDF5',
+                border: '1px solid #34D399',
+                borderRadius: 4,
+                padding: 16,
+                marginBottom: 24,
+                fontSize: 14,
+              }}
             />
           )}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8 }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
             <label>답:</label>
             <input
               type="text"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
-              style={{ padding: '4px 8px', border: '1px solid #D1D5DB', borderRadius: 4 }}
+              style={{
+                padding: '4px 8px',
+                border: '1px solid #D1D5DB',
+                borderRadius: 4,
+              }}
             />
             <button
               onClick={checkAnswer}
-              style={{ padding: '6px 12px', backgroundColor: answerState === 'correct' ? '#059669' : answerState === 'wrong' ? '#EF4444' : '#9CA3AF', color: '#fff', border: 'none' }}
+              style={{
+                padding: '6px 12px',
+                backgroundColor:
+                  answerState === 'correct'
+                    ? '#059669'
+                    : answerState === 'wrong'
+                    ? '#EF4444'
+                    : '#9CA3AF',
+                color: '#fff',
+                border: 'none',
+              }}
             >
-              {answerState === 'correct' ? '정답!' : answerState === 'wrong' ? '오답!' : '정답보기'}
+              {answerState === 'correct'
+                ? '정답!'
+                : answerState === 'wrong'
+                ? '오답!'
+                : '정답보기'}
             </button>
           </div>
         </div>
